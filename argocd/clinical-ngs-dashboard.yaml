@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: clinical-ngs-dashboard
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: git@github.com:Vaibhavi1902/clinical-ngs-gitops.git
+    targetRevision: main
+    path: apps/clinical-ngs-dashboard
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: clinical-ngs
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
